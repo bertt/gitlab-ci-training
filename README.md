@@ -2,26 +2,27 @@
 
 ## Agenda
 
-- [What is CI](#what-is-ci)
-- [CI Jobs](#ci-jobs)
-- [Deployments from CI](#deployments-from-ci)
+- 1. [What is CI](#what-is-ci)
+- 2. [Getting started](#wgetting-started)
+- 3. [CI Jobs](#ci-jobs)
+- 3. [from CI](#deployments-from-ci)
 - [Example Project Pipeline](#example-project-pipeline)
 
-## What is CI
+## 1. What is CI
 
-### Git
+### 1.1 Git
 
 Git is a version control system for tracking changes in computer files and coordinating work on those files among multiple people.
 
-### Gitlab
+### 1.2 Gitlab
 
 From project planning and source code management to CI/CD and monitoring, GitLab is a complete DevOps platform, delivered as a single application.
 
-### CI
+### 1.3 CI
 
 In software engineering, continuous integration is the practice of merging all developer working copies to a shared mainline several times a day.
 
-### Usage of CI
+### 1.4 Usage of CI
 
 Automatization of:
 
@@ -29,18 +30,18 @@ Automatization of:
 - testing - unit tests, integration tests, linting, formating
 - deployment - dev, staging, production
 
-### Gitlab CI Features
+### 1.5 Gitlab CI Features
 
 - Integration into Gitlab (CE & EE)
 - Versioned (YAML file in repository)
 - Easy to scale
 - Docker & Kubernetes support
 
-### Gitlab CI Architecture
+### 1.6 Gitlab CI Architecture
 
 ![gitlab-ci-architecture](./gitlab-ci-architecture.png)
 
-### Gitlab Runner
+### 1.7 Gitlab Runner
 
 Runs on every platform - Linux, Mac, Windows, Docker, Kubernetes
 
@@ -49,7 +50,7 @@ How to install & configure:
 - https://docs.gitlab.com/runner/install/
 - https://docs.gitlab.com/runner/register/
 
-## Getting started
+## 2 Getting started
 
 Go to https://www.gitlab.com, create account and create a new project. Name for example: 'gitlabcitraining'
 
@@ -57,9 +58,9 @@ Go to Settings -> CI/CD -> Runners.
 
 Question: How many 'shared' runners are available?
 
-## CI Jobs
+## 3. CI Jobs
 
-### Gitlab CI YAML
+### 3.1 Gitlab CI YAML
 
 Configuration of everything aroud Gitlab CI is stored inside Git repository in file `.gitlab-ci.yml`
 
@@ -67,7 +68,7 @@ If you don't know YAML format, check out this simple YAML tutorial - <https://le
 
 Here is a Gitlab CI YAML reference - <https://docs.gitlab.com/ce/ci/yaml/README.html>
 
-### First Job
+### 3.2 First Job
 
 Create file `.gitlab-ci.yml` with following content:
 
@@ -82,13 +83,13 @@ Push to Gitlab and go to CI/CD -> Pipelines. A first pipeline should be created,
 
 Question: Which Docker image is used in the pipeline?
 
-### Job
+### 3.3 Job
 
 Jobs are smalles units which can be executed by Gitlab CI. Here are samples of common job configurations.
 
 Jobs are top level object in Gitlab CI YAML files instead of [few keywords](https://docs.gitlab.com/ce/ci/yaml/README.html#unavailable-names-for-jobs). Keywords are: `image`, `services`, `stages`, `types`, `before_script`, `after_script`, `variables`, `cache`
 
-#### Script
+#### 3.3.1 Script
 
 Every job require `script` - it's a shell script which will be executed by job. Script can be string or list of strings.
 
@@ -105,7 +106,7 @@ job2:
 
 Question: How can we change the yaml so job2 is executed before job1?
 
-#### Stages
+#### 3.3.2 Stages
 
 You can define order of jobs by stages. You can define stages and their order. Jobs in same stage run in parallel and after CI finishes all job in stage, then start jobs from next stage.
 
@@ -129,7 +130,7 @@ test2:
   script: echo Test2!
 ```
 
-#### Before & After Script
+#### 3.3.3 Before & After Script
 
 You can define script which will be executed before and after job script. You can define those script globally or per job.
 
@@ -157,7 +158,7 @@ job3:
 
 Question: The pipeline fails, how to fix it? What is the output of Job1, Job2, Job 3?
 
-#### When
+#### 3.3.4 When
 
 You can control when do you want run your jobs. By default, jobs are executed automatically when previous stage succeed. You can specify another condition, you can run jobs manually, always or on error.
 
@@ -199,7 +200,7 @@ Questions:
 
 - How can trigger the 'diagnostics' job?
 
-#### Allow Failure
+#### 3.3.5 Allow Failure
 
 You can specify flag `allow_failure` to `true`, job can fail but pipeline will succeed.
 
@@ -226,7 +227,7 @@ test2:
   allow_failure: false
 ```
 
-#### Only & Except
+#### 3.3.6 Only & Except
 
 You can specify another condition when you can run jobs. You can specify branches and tags on which you want to run your jobs or not.
 
@@ -273,7 +274,7 @@ Full reference here - <https://docs.gitlab.com/ce/ci/yaml/index.html#only--excep
 
 Question: How can we run the 'integration_test' job?
 
-#### Only Changes
+#### 3.3.7 Only Changes
 
 You can run job when are changes is some files. That's great for monorepos.
 
@@ -296,7 +297,7 @@ Build B:
 - Example monorepo with only changes - <https://github.com/ondrejsika/ondrejsikawebs>
 - Full Reference - <https://docs.gitlab.com/ce/ci/yaml/index.html#onlychanges--exceptchanges>
 
-### Merge Request Pipelines
+### 3.4 Merge Request Pipelines
 
 ```yaml
 stages:
@@ -324,7 +325,7 @@ deploy:
     - master
 ```
 
-### Variables
+### 3.5 Variables
 
 Gitlab CI offers you lots of usable variables like:
 
@@ -377,7 +378,7 @@ variables:
   IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
 ```
 
-### Cache
+### 3.6 Cache
 
 Cache is used to specify a list of files and directories which should be cached between jobs. You can only use paths that are within the project workspace.
 
@@ -418,7 +419,7 @@ job:
     - yarn build
 ```
 
-### Artifacts
+### 3.7 Artifacts
 
 Artifacts is used to specify a list of files and directories which should be attached to the job when it succeeds, fails, or always.
 
@@ -494,7 +495,7 @@ test B:
 
 Or you can use dependencies when you have lots of artifact and dont want to slow down your jobs by downloading unnecessary artifacts.
 
-### JUnit Test Reports
+### 3.8 JUnit Test Reports
 
 [Docs](https://docs.gitlab.com/ee/ci/unit_test_reports.html)
 
@@ -518,7 +519,7 @@ test:
       junit: report.xml
 ```
 
-### Docker
+### 3.9 Docker
 
 - Fully supported
 - Easiest way how to create build environment
@@ -557,7 +558,7 @@ job:
     - docker push $CI_REGISTRY_IMAGE
 ```
 
-### Docker Image `ondrejsika/ci`
+### 3.10 Docker Image `ondrejsika/ci`
 
 That is my image which I use for most of CI jobs.
 
@@ -844,39 +845,3 @@ release mac:
     - mac e2e tests
 ```
 
-## Resources
-
-- Gitlab CI Runner Setup (in Docker) - <https://github.com/ondrejsika/ondrejsika-gitlab-runner>
-- Gitlab on Digital Ocean using Terraform - <https://github.com/ondrejsika/terraform-demo-gitlab>
-- `ondrejsika/ci` Docker image - <https://github.com/ondrejsika/ondrejsika-ci-docker>
-- [Traefik](https://traefik.io) (proxy) with Let's Encrypt - <https://github.com/ondrejsika/traefik-le>
-
-Docs:
-
-- [Child Pipelines](https://docs.gitlab.com/ce/ci/parent_child_pipelines.html)
-- [Multi Project Pipelines](https://docs.gitlab.com/ce/ci/multi_project_pipelines.html)
-
-### Examples
-
-- Docker Compose deployment with Traefik - <https://github.com/ondrejsika/gitlab-ci-docker-compose-traefik--example>
-- Kubernetes Deployment - <https://github.com/ondrejsika/gitlab-ci-example-kubernetes>
-
-## Thank you! & Questions?
-
-That's it. Do you have any questions? **Let's go for a beer!**
-
-### Do you like the course? Tweet about it <3
-
-Please, tweet something with `@ondrejsika`. Thanks :)
-
-### Ondrej Sika
-
-- email: <ondrej@sika.io>
-- web: <https://sika.io>
-- twitter: [@ondrejsika](https://twitter.com/ondrejsika)
-- linkedin: [/in/ondrejsika/](https://linkedin.com/in/ondrejsika/)
-- Newsletter, Slack, Facebook & Linkedin Groups: <https://join.sika.io>
-
-### Next time?
-
-Wanna to go for a beer or do some work together? Just [book me](https://book-me.sika.io) :)
