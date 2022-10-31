@@ -49,6 +49,14 @@ How to install & configure:
 - https://docs.gitlab.com/runner/install/
 - https://docs.gitlab.com/runner/register/
 
+## Getting started
+
+Go to https://www.gitlab.com, create account and create a new project. Name for example: 'gitlabcitraining'
+
+Go to Settings -> CI/CD -> Runners.
+
+Question: How many 'shared' runners are available?
+
 ## CI Jobs
 
 ### Gitlab CI YAML
@@ -61,7 +69,7 @@ Here is a Gitlab CI YAML reference - <https://docs.gitlab.com/ce/ci/yaml/README.
 
 ### First Job
 
-Create new projet and create there file `.gitlab-ci.yml` with following content:
+Create file `.gitlab-ci.yml` with following content:
 
 ```yaml
 # .gitlab-ci.yml
@@ -70,7 +78,9 @@ job:
   script: echo Hello World!
 ```
 
-Push to Gitlab and check it out.
+Push to Gitlab and go to CI/CD -> Pipelines. A first pipeline should be created, check the options and console messages.
+
+Question: Which Docker image is used in the pipeline?
 
 ### Job
 
@@ -80,7 +90,7 @@ Jobs are top level object in Gitlab CI YAML files instead of [few keywords](http
 
 #### Script
 
-Every job require `script` - it's a shell scrip which will be executed by job. Script can be string or list of strings.
+Every job require `script` - it's a shell script which will be executed by job. Script can be string or list of strings.
 
 ```yaml
 # .gitlab-ci.yml
@@ -93,9 +103,11 @@ job2:
     - echo Ahoj Svete!
 ```
 
+Question: How can we change the yaml so job2 is executed before job1?
+
 #### Stages
 
-You can define order of jobs by stages. You can define stages and their order. Jobs in same stage run in parallel and after CI finishes all job in stage, then start jobs from next.
+You can define order of jobs by stages. You can define stages and their order. Jobs in same stage run in parallel and after CI finishes all job in stage, then start jobs from next stage.
 
 ```yaml
 # .gitlab-ci.yml
@@ -119,7 +131,7 @@ test2:
 
 #### Before & After Script
 
-You can define script which will be executed befor and after job script. You can define those script globally or per job.
+You can define script which will be executed before and after job script. You can define those script globally or per job.
 
 ```yaml
 # .gitlab-ci.yml
@@ -142,6 +154,8 @@ job3:
   after_script: []
   script: echo Job3!
 ```
+
+Question: The pipeline fails, how to fix it? What is the output of Job1, Job2, Job 3?
 
 #### When
 
@@ -178,6 +192,12 @@ reporting:
   script: echo Run CI reporting ...
   when: always
 ```
+
+Questions: 
+
+- How can we run job 'deploy'?
+
+- How can trigger the 'diagnostics' job?
 
 #### Allow Failure
 
@@ -250,6 +270,8 @@ deploy:
 ```
 
 Full reference here - <https://docs.gitlab.com/ce/ci/yaml/index.html#only--except>
+
+Question: How can we run the 'integration_test' job?
 
 #### Only Changes
 
