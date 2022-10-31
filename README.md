@@ -85,7 +85,7 @@ Question: Which Docker image is used in the pipeline?
 
 ### 3.3 Job
 
-Jobs are smalles units which can be executed by Gitlab CI. Here are samples of common job configurations.
+Jobs are smallest units which can be executed by Gitlab CI. Here are samples of common job configurations.
 
 Jobs are top level object in Gitlab CI YAML files instead of [few keywords](https://docs.gitlab.com/ce/ci/yaml/README.html#unavailable-names-for-jobs). Keywords are: `image`, `services`, `stages`, `types`, `before_script`, `after_script`, `variables`, `cache`
 
