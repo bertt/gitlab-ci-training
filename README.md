@@ -332,11 +332,11 @@ variables:
 
 job1:
   script: 
-    echo $XXX_GLOBAL
-    echo $CI_PROJECT_NAME
+      - echo global variable $XXX_GLOBAL
+      - echo Project name $CI_PROJECT_NAME
 ```
 
-Exercise: Add a vairiable using Settings -> CI / CD -> Variables and echo value in job
+Exercise: Add a variable using Settings -> CI / CD -> Variables and echo value in job
 
 ### 3.5 Artifacts
 
