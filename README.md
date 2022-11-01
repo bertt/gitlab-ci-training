@@ -396,12 +396,14 @@ Create a .gitlab-ci.yml containing:
 ```yml
 # .gitlab-ci.yml
 test:
-  image: ondrejsika/pytest
+  image: python:3.8-slim
   script:
+    - pip3 install pytest
     - pytest --junitxml=report.xml
   artifacts:
     reports:
       junit: report.xml
+
 ```
 
 Question: Pipeline will fail, how to fix the build?
