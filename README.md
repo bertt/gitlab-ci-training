@@ -283,9 +283,6 @@ You can run job when there are changes in some files. That's great for monorepos
 
 Build A:
   script: echo build A ...
-  only:
-    changes:
-      - a/**
 
 Build B:
   script: echo build B ...
@@ -294,13 +291,13 @@ Build B:
       - b/**
 ```
 
+Question: How to trigger job 'Build B'?
+
 - Full Reference - <https://docs.gitlab.com/ce/ci/yaml/index.html#onlychanges--exceptchanges>
-
-
 
 ### 3.4 Variables
 
-Gitlab CI offers you lots of usable variables like:
+Gitlab CI offers lots of usable variables like:
 
 - `CI`
 - `CI_PROJECT_NAME`, `CI_PROJECT_PATH_SLUG`
@@ -318,7 +315,7 @@ You can define own variables in:
 - Globally in CI YAML
 - In job in CI YAML
 
-You can define varible in **Settings -> CI / CD -> Variables**. Same for project and group. You can define for example connection to your Kubernetes cluster, AWS credentials, ...
+You can define varible in **Settings -> CI / CD -> Variables**. Same for project and group. You can define for example connection to your Kubernetes cluster, Docker credentials, ...
 
 Variables can be defined as:
 
