@@ -198,7 +198,7 @@ Questions:
 
 - How can we run job 'deploy'?
 
-- How can trigger the 'diagnostics' job?
+- How can we trigger the 'diagnostics' job?
 
 #### 3.3.5 Allow Failure
 
@@ -276,26 +276,27 @@ Question: How can we run the 'integration_test' job?
 
 #### 3.3.7 Only Changes
 
-You can run job when are changes is some files. That's great for monorepos.
+You can run job when there are changes in some files. That's great for monorepos.
 
 ```yaml
 # .gitlab-ci.yml
 
 Build A:
-  script: echo Cuild A ...
+  script: echo build A ...
   only:
     changes:
       - a/**
 
 Build B:
-  script: echo Cuild B ...
+  script: echo build B ...
   only:
     changes:
       - b/**
 ```
 
-- Example monorepo with only changes - <https://github.com/ondrejsika/ondrejsikawebs>
 - Full Reference - <https://docs.gitlab.com/ce/ci/yaml/index.html#onlychanges--exceptchanges>
+
+
 
 ### 3.4 Variables
 
