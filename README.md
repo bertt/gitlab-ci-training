@@ -444,3 +444,28 @@ job:
     - docker build -t $CI_REGISTRY_IMAGE .
     - docker push $CI_REGISTRY_IMAGE
 ```
+
+
+To run Docker tooling from GitLab CI use docker:stable image:
+
+```
+# .gitlab-ci.yml
+
+variables:
+  XXX_GLOBAL: global
+
+job1:
+  # before_script:
+      # - mkdir -p $HOME/.docker
+      # - echo $DOCKER_AUTH_CONFIG > $HOME/.docker/config.json
+
+  image: docker:stable  
+  services:
+      - name: docker:dind
+        alias: docker
+
+  script: 
+      - docker version
+      # - docker build
+      # - docker push 
+```
