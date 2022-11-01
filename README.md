@@ -315,7 +315,7 @@ You can define own variables in:
 - Globally in CI YAML
 - In job in CI YAML
 
-You can define varible in **Settings -> CI / CD -> Variables**. Same for project and group. You can define for example connection to your Kubernetes cluster, Docker credentials, ...
+You can define variable in **Settings -> CI / CD -> Variables**. Same for project and group. You can define for example connection to your Kubernetes cluster, Docker credentials, ...
 
 Variables can be defined as:
 
@@ -331,13 +331,10 @@ variables:
   XXX_GLOBAL: global
 
 job1:
-  script: env | grep XXX
-
-job2:
-  variables:
-    XXX_LOCAL: local
-  script: env | grep XXX
+  script: echo $XXX_GLOBAL
 ```
+
+Exercise: Add a vairiable using Settings -> CI / CD -> Variables and echo value in job
 
 ### 3.5 Artifacts
 
@@ -369,15 +366,19 @@ test:
     - cat out/index.html
 ```
 
-When the job succed, you can browse and download job from Gitlab.
+When the job succeeds, you can browse and download artifact from GitLab.
 
 More about artifacts: <https://docs.gitlab.com/ce/user/project/pipelines/job_artifacts.html>
 
+Exercise: Run pipeline and download artifact from CI/CD -> Pipelines -> Download artifacts. Inspect the content of zip file.
+
 Question: How can we clean up artifacts after 1 day?
 
-### 3.6 JUnit Test Reports
+### 3.6 Test Reports
 
 [Docs](https://docs.gitlab.com/ee/ci/unit_test_reports.html)
+
+Create a file 'test_example.py' containing:
 
 ```python
 # test_example.py
@@ -387,6 +388,8 @@ def test_ok():
 def test_err():
     assert False
 ```
+
+Create a .gitlab-ci.yml containing:
 
 ```yml
 # .gitlab-ci.yml
@@ -399,13 +402,13 @@ test:
       junit: report.xml
 ```
 
+Question: Pipeline will fail, how to fix the build?
+
 ### 3.7 Docker
 
 - Fully supported
 - Easiest way how to create build environment
 - Easiest way how to run and distribute your software
-
-If you have a Docker or Kubernetes executor ([we have](https://github.com/ondrejsika/ondrejsika-gitlab-runner/blob/master/register-runner.sh#L12)) you can define image where you want to run your job.
 
 You can specify image globally or in job:
 
