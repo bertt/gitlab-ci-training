@@ -406,6 +406,8 @@ test:
 
 Question: Pipeline will fail, how to fix the build?
 
+Exrcise: Download artifact and inspect test report (xml file)
+
 ### 3.7 Docker
 
 - Fully supported
