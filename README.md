@@ -308,7 +308,7 @@ Gitlab CI offers lots of usable variables like:
 
 See all variables: <https://docs.gitlab.com/ce/ci/variables/predefined_variables.html#variables-reference>
 
-Question: Which directory is used for the source code and builds of the project?
+Question: Which variable is used to specify directory containing project source code? What is the value of this variable?
 
 You can define own variables in:
 
