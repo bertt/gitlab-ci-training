@@ -85,13 +85,13 @@ Push to Gitlab and go to CI/CD -> Pipelines. A first pipeline should be created,
 
 Question: Which Docker image is used in the pipeline?
 
-### 3.4 Jobs
+### 3.3 Jobs
 
 Jobs are smallest units which can be executed by Gitlab CI. Here are samples of common job configurations.
 
 Jobs are top level object in Gitlab CI YAML files instead of [few keywords](https://docs.gitlab.com/ce/ci/yaml/README.html#unavailable-names-for-jobs). Keywords are: `image`, `services`, `stages`, `types`, `before_script`, `after_script`, `variables`, `cache`
 
-### 3.5 Scripts
+### 3.4 Scripts
 
 Every job require `script` - it's a shell script which will be executed by job. Script can be string or list of strings.
 
@@ -108,7 +108,7 @@ job2:
 
 Question: How can we change the yaml so job2 is executed before job1?
 
-### 3.6 Stages
+### 3.5 Stages
 
 You can define order of jobs by stages. You can define stages and their order. Jobs in same stage run in parallel and after CI finishes all job in stage, then start jobs from next stage.
 
@@ -132,7 +132,7 @@ test2:
   script: echo Test2!
 ```
 
-### 3.7 Before & After Script
+### 3.6 Before & After Script
 
 You can define script which will be executed before and after job script. You can define those script globally or per job.
 
@@ -160,7 +160,7 @@ job3:
 
 Question: The pipeline fails, how to fix it? What is the output of Job1, Job2, Job 3?
 
-### 3.8 When
+### 3.7 When
 
 You can control when you want to run your jobs. By default, jobs are executed automatically when the previous stage succeeds. You can specify another condition, you can run jobs manually, always or on error.
 
@@ -202,7 +202,7 @@ Questions:
 
 - How can we trigger the 'diagnostics' job?
 
-### 3.9 Allow Failure
+### 3.8 Allow Failure
 
 You can specify flag `allow_failure` to `true`, job can fail but pipeline will succeed.
 
@@ -214,7 +214,7 @@ test:
   allow_failure: true
 ```
 
-### 3.10 Only & Except
+### 3.9 Only & Except
 
 You can specify another condition when you can run jobs. You can specify branches and tags on which you want to run your jobs or not.
 
@@ -261,7 +261,7 @@ Full reference here - <https://docs.gitlab.com/ce/ci/yaml/index.html#only--excep
 
 Question: How can we run the 'integration_test' job?
 
-### 3.11 Only Changes
+### 3.10 Only Changes
 
 You can run job when there are changes in some files. That's great for monorepos.
 
