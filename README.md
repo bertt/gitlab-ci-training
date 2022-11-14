@@ -162,7 +162,7 @@ Question: The pipeline fails, how to fix it? What is the output of Job1, Job2, J
 
 ### 3.8 When
 
-You can control when do you want run your jobs. By default, jobs are executed automatically when previous stage succeed. You can specify another condition, you can run jobs manually, always or on error.
+You can control when you want to run your jobs. By default, jobs are executed automatically when the previous stage succeeds. You can specify another condition, you can run jobs manually, always or on error.
 
 ```yaml
 # .gitlab-ci.yml
@@ -212,21 +212,6 @@ You can specify flag `allow_failure` to `true`, job can fail but pipeline will s
 test:
   script: echo test ... && false
   allow_failure: true
-```
-
-Manual jobs are allowed to fail by default, if you want to disallow failure, you have to set `allow_failure` to `false`.
-
-```yaml
-# .gitlab-ci.yml
-
-test:
-  when: manual
-  script: echo test ... && false
-
-test2:
-  when: manual
-  script: echo test ... && false
-  allow_failure: false
 ```
 
 ### 3.10 Only & Except
@@ -321,11 +306,6 @@ You can define own variables in:
 
 You can define variable in **Settings -> CI / CD -> Variables**. Same for project and group. You can define for example connection to your Kubernetes cluster, Docker credentials, ...
 
-Variables can be defined as:
-
-- **Masked** - Value is hidden from the CI output. You probably dont want to show any credential, even development one.
-- **Protected** - Protected variable appears only in jobs on protected branches. If developers can't push to protected branches, there have no chance to get production deployment keys or deploy to production. After code has been merged to master (protected), then protected variables appears and you can deploy to production.
-
 Example job:
 
 ```yaml
@@ -375,8 +355,6 @@ test:
 When the job succeeds, you can browse and download artifact from GitLab.
 
 More about artifacts: <https://docs.gitlab.com/ce/user/project/pipelines/job_artifacts.html>
-
-Exercise: Run pipeline and download artifact from CI/CD -> Pipelines -> Download artifacts. Inspect the content of zip file.
 
 Question: How can we clean up artifacts after 1 day?
 
@@ -462,7 +440,7 @@ func main() {
 }
 ```
 
-Create i a job a Docker image containing the Golang code, using the following Dockerfile:
+Create in a job a Docker image containing the Golang code, using the following Dockerfile:
 
 ```
 FROM golang:1.14.0-alpine
@@ -472,11 +450,11 @@ COPY hello-world.go .
 CMD [ "go", "run", "hello-world.go" ]
 ```
 
-Hint: use image 'docker:stable'
+Hints: use image 'docker:stable' and $ docker build -t hello-world .
 
 Run the image in a job using $ docker run.
 
-Advanced exercise: push the Docker image to a repository of choice, use for credentials a variable:
+Advanced exercise: push the Docker image to a repository of choice, use for credentials a variable containing config.json:
 
 ```
     - mkdir -p $HOME/.docker
