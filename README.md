@@ -426,7 +426,7 @@ To execute Docker commands (like Docker build), a 'service' needs to be added to
           alias: docker
 ```
 
-Exercise:
+Exercise for build/push a Docker image from code:
 
 Create a Golang file 'hello_world.go':
 
