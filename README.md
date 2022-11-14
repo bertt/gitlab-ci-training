@@ -91,7 +91,7 @@ Jobs are smallest units which can be executed by Gitlab CI. Here are samples of 
 
 Jobs are top level object in Gitlab CI YAML files instead of [few keywords](https://docs.gitlab.com/ce/ci/yaml/README.html#unavailable-names-for-jobs). Keywords are: `image`, `services`, `stages`, `types`, `before_script`, `after_script`, `variables`, `cache`
 
-#### 3.5 Scripts
+### 3.5 Scripts
 
 Every job require `script` - it's a shell script which will be executed by job. Script can be string or list of strings.
 
