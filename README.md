@@ -4,8 +4,11 @@
 
 1. [What is CI](#what-is-ci)
 2. [Getting started](#wgetting-started)
-3. [CI Jobs](#ci-jobs)
-3. [from CI](#deployments-from-ci)
+3. [Jobs and stages](#ci-jobs)
+4. [Variables](#variables)
+5. [Artifacts](#variables)
+6. [Tests](#tests)
+7. [Docker](#docker)
 
 ## 1. What is CI
 
@@ -82,13 +85,13 @@ Push to Gitlab and go to CI/CD -> Pipelines. A first pipeline should be created,
 
 Question: Which Docker image is used in the pipeline?
 
-### 3.3 Job
+### 3.4 Jobs
 
 Jobs are smallest units which can be executed by Gitlab CI. Here are samples of common job configurations.
 
 Jobs are top level object in Gitlab CI YAML files instead of [few keywords](https://docs.gitlab.com/ce/ci/yaml/README.html#unavailable-names-for-jobs). Keywords are: `image`, `services`, `stages`, `types`, `before_script`, `after_script`, `variables`, `cache`
 
-#### 3.3.1 Script
+#### 3.5 Scripts
 
 Every job require `script` - it's a shell script which will be executed by job. Script can be string or list of strings.
 
@@ -105,7 +108,7 @@ job2:
 
 Question: How can we change the yaml so job2 is executed before job1?
 
-#### 3.3.2 Stages
+### 3.6 Stages
 
 You can define order of jobs by stages. You can define stages and their order. Jobs in same stage run in parallel and after CI finishes all job in stage, then start jobs from next stage.
 
@@ -129,7 +132,7 @@ test2:
   script: echo Test2!
 ```
 
-#### 3.3.3 Before & After Script
+### 3.7 Before & After Script
 
 You can define script which will be executed before and after job script. You can define those script globally or per job.
 
@@ -157,7 +160,7 @@ job3:
 
 Question: The pipeline fails, how to fix it? What is the output of Job1, Job2, Job 3?
 
-#### 3.3.4 When
+### 3.8 When
 
 You can control when do you want run your jobs. By default, jobs are executed automatically when previous stage succeed. You can specify another condition, you can run jobs manually, always or on error.
 
@@ -199,7 +202,7 @@ Questions:
 
 - How can we trigger the 'diagnostics' job?
 
-#### 3.3.5 Allow Failure
+### 3.9 Allow Failure
 
 You can specify flag `allow_failure` to `true`, job can fail but pipeline will succeed.
 
@@ -226,7 +229,7 @@ test2:
   allow_failure: false
 ```
 
-#### 3.3.6 Only & Except
+### 3.10 Only & Except
 
 You can specify another condition when you can run jobs. You can specify branches and tags on which you want to run your jobs or not.
 
@@ -273,7 +276,7 @@ Full reference here - <https://docs.gitlab.com/ce/ci/yaml/index.html#only--excep
 
 Question: How can we run the 'integration_test' job?
 
-#### 3.3.7 Only Changes
+### 3.11 Only Changes
 
 You can run job when there are changes in some files. That's great for monorepos.
 
@@ -294,7 +297,7 @@ Question: How to trigger job 'Build B'?
 
 - Full Reference - <https://docs.gitlab.com/ce/ci/yaml/index.html#onlychanges--exceptchanges>
 
-### 3.4 Variables
+## 4 Variables
 
 Gitlab CI offers lots of usable variables like:
 
@@ -339,7 +342,7 @@ job1:
 
 Exercise: Add a variable using Settings -> CI / CD -> Variables and echo value in job
 
-### 3.5 Artifacts
+## 5 Artifacts
 
 Artifacts is used to specify a list of files and directories which should be attached to the job when it succeeds, fails, or always.
 
@@ -377,7 +380,7 @@ Exercise: Run pipeline and download artifact from CI/CD -> Pipelines -> Download
 
 Question: How can we clean up artifacts after 1 day?
 
-### 3.6 Test Reports
+## 6 Tests
 
 [Docs](https://docs.gitlab.com/ee/ci/unit_test_reports.html)
 
@@ -411,7 +414,7 @@ Question: Pipeline will fail, how to fix the build?
 
 Exercise: Download artifact and inspect test report (xml file)
 
-### 3.7 Docker
+## 7 Docker
 
 - Fully supported
 - Easiest way how to create build environment
@@ -459,7 +462,7 @@ func main() {
 }
 ```
 
-Create a Docker image containing the Golang code, using the following Dockerfile:
+Create i a job a Docker image containing the Golang code, using the following Dockerfile:
 
 ```
 FROM golang:1.14.0-alpine
@@ -469,6 +472,13 @@ COPY hello-world.go .
 CMD [ "go", "run", "hello-world.go" ]
 ```
 
+Hint: use image 'docker:stable'
+
 Run the image in a job using $ docker run.
 
-Question: Which Docker image have you used to execute the Docker commands?
+Advanced exercise: push the Docker image to a repository of choice, use for credentials a variable:
+
+```
+    - mkdir -p $HOME/.docker
+    - echo $DOCKER_AUTH_CONFIG > $HOME/.docker/config.json
+```
