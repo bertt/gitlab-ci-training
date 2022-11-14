@@ -2,11 +2,10 @@
 
 ## Agenda
 
-- 1. [What is CI](#what-is-ci)
-- 2. [Getting started](#wgetting-started)
-- 3. [CI Jobs](#ci-jobs)
-- 3. [from CI](#deployments-from-ci)
-- [Example Project Pipeline](#example-project-pipeline)
+1. [What is CI](#what-is-ci)
+2. [Getting started](#wgetting-started)
+3. [CI Jobs](#ci-jobs)
+3. [from CI](#deployments-from-ci)
 
 ## 1. What is CI
 
