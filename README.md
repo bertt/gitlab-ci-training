@@ -410,7 +410,7 @@ test:
 
 Question: Pipeline will fail, how to fix the build?
 
-Exrcise: Download artifact and inspect test report (xml file)
+Exercise: Download artifact and inspect test report (xml file)
 
 ### 3.7 Docker
 
@@ -423,53 +423,53 @@ You can specify image globally or in job:
 ```yaml
 # .gitlab-ci.yml
 
-image: ondrejsika/ci
+image: dtzar/helm-kubectl
 
 build:
   image: node
   script:
-    - yarn
-    - yarn run build
+    - node --version
 
 deploy:
+  
+  allow_failure: true
   script:
-    - kubectl apply -f kubernetes.yml
+    # for authentication: - echo -n $KUBECONFIG > $HOME/.kube/config
+    - kubectl version
 ```
 
-You can also run docker commands from job because we have added Docker socket there. See [here](https://github.com/ondrejsika/ondrejsika-gitlab-runner/blob/master/create-runner.sh#L6)
-and [here](https://github.com/ondrejsika/ondrejsika-gitlab-runner/blob/master/register-runner.sh#L14).
-
-```yaml
-# .gitlab-ci.yml
-
-job:
-  script:
-    - docker login $CI_REGISTRY -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
-    - docker build -t $CI_REGISTRY_IMAGE .
-    - docker push $CI_REGISTRY_IMAGE
-```
-
-
-To run Docker tooling from GitLab CI use docker:stable image:
+To execute Docker commands (like Docker build), a 'service' needs to be added to the job:
 
 ```
-# .gitlab-ci.yml
-
-variables:
-  XXX_GLOBAL: global
-
-job1:
-  # before_script:
-      # - mkdir -p $HOME/.docker
-      # - echo $DOCKER_AUTH_CONFIG > $HOME/.docker/config.json
-
-  image: docker:stable  
-  services:
-      - name: docker:dind
-        alias: docker
-
-  script: 
-      - docker version
-      # - docker build
-      # - docker push 
+    services:
+        - name: docker:dind
+          alias: docker
 ```
+
+Exercise:
+
+Create a Golang file 'hello_world.go':
+
+```
+package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("hello world")
+}
+```
+
+Create a Docker image containing the Golang code, using the following Dockerfile:
+
+```
+FROM golang:1.14.0-alpine
+
+WORKDIR /go/src/
+COPY hello-world.go .
+CMD [ "go", "run", "hello-world.go" ]
+```
+
+Run the image in a job using $ docker run.
+
+Question: Which Docker image have you used to execute the Docker commands?
