@@ -111,6 +111,7 @@ Question: How can we change the yaml so job2 is executed before job1?
 ### 3.5 Stages
 
 You can define order of jobs by stages. You can define stages and their order. Jobs in same stage run in parallel and after CI finishes all job in stage, then start jobs from next stage.
+Default stages are  build, test and deploy
 
 ```yaml
 # .gitlab-ci.yml
